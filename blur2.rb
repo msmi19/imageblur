@@ -15,13 +15,13 @@ class Image
   def blur(distance)
     distance.times do
       ones = find_ones
-      @pixels.each_with_index do |row, i|
-        row.each_with_index do |val, j|
-          if ones.include?([i, j])
-            @pixels[i-1][j] = 1 unless i == 0
-            @pixels[i+1][j] = 1 unless i == (@pixels.length - 1)
-            @pixels[i][j-1] = 1 unless j == 0
-            @pixels[i][j+1] = 1 unless j == (row.length - 1)
+      @pixels.each_with_index do |row, x|
+        row.each_with_index do |val, y|
+          if ones.include?([x, y])
+            @pixels[x-1][y] = 1 unless x == 0
+            @pixels[x+1][y] = 1 unless x == (@pixels.length - 1)
+            @pixels[x][y-1] = 1 unless y == 0
+            @pixels[x][y+1] = 1 unless y == (row.length - 1)
           end
         end
       end
@@ -30,10 +30,10 @@ class Image
 
   def find_ones
     ones = []
-    @pixels.each_with_index do |row, i|
-      row.each_with_index do |val, j|
+    @pixels.each_with_index do |row, x|
+      row.each_with_index do |val, y|
         if val == 1
-          ones << [i, j]        
+          ones << [x, y]        
         end
       end
     end
