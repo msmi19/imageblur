@@ -12,6 +12,8 @@ class Image
     end
   end
 
+  #manhattan distance |x1 – x2| + |y1 – y2|
+
   def blur(distance)
     distance.times do
       ones = find_ones
