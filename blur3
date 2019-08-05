@@ -1,0 +1,63 @@
+#output in terminal = 0000, 01000, 0001, 0000
+class Image
+  attr_accessor :pixels
+
+  def initialize(array)
+    @pixels = array
+  end
+
+  def output_image
+    @pixels.each do |pixel_row|
+      puts "#{pixel_row.join}"
+    end
+  end
+
+  #|x1 - x2| + |y1 - y2|
+  #.abs = absolute value
+  def manhattan_distance(x1, y1, x2, y2)
+    (x1 - x2).abs + (y1 - y2).abs
+  end
+
+  def blur(distance)
+    ones = find_ones
+      @pixels.each_with_index do |row, x2|
+        row.each_with_index do |val, y2|
+          ones.each do |x1, y1|
+             mnhtn_distance = manhattan_distance(x1, y1, x2, y2)
+            if mnhtn_distance <= distance
+              @pixels[x2][y2] = 1
+            end
+          end
+        end
+      end
+  end
+
+  def find_ones
+    ones = []
+      @pixels.each_with_index do |row, x|
+        row.each_with_index do |val, y|
+          if val == 1
+            ones << [x, y]        
+          end
+        end
+      end
+      ones
+  end
+end
+
+image = Image.new([
+  [0, 0, 0, 0],
+  [0, 1, 0, 0],
+  [0, 0, 0, 1],
+  [0, 0, 0, 0]
+])
+
+image.output_image
+puts "---"
+puts "blurred image with manhattan distance"
+# enter blur distance
+image.blur(1)
+puts "---"
+image.output_image
+puts "---"
+# puts image.get_ones
